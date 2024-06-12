@@ -19,27 +19,27 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GoPassSecretManagerWebhookClient is the client API for GoPassSecretManagerWebhook service.
+// GoPassSecretsManagerWebhookClient is the client API for GoPassSecretsManagerWebhook service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type GoPassSecretManagerWebhookClient interface {
-	Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (GoPassSecretManagerWebhook_WebhookClient, error)
+type GoPassSecretsManagerWebhookClient interface {
+	Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (GoPassSecretsManagerWebhook_WebhookClient, error)
 }
 
-type goPassSecretManagerWebhookClient struct {
+type goPassSecretsManagerWebhookClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewGoPassSecretManagerWebhookClient(cc grpc.ClientConnInterface) GoPassSecretManagerWebhookClient {
-	return &goPassSecretManagerWebhookClient{cc}
+func NewGoPassSecretsManagerWebhookClient(cc grpc.ClientConnInterface) GoPassSecretsManagerWebhookClient {
+	return &goPassSecretsManagerWebhookClient{cc}
 }
 
-func (c *goPassSecretManagerWebhookClient) Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (GoPassSecretManagerWebhook_WebhookClient, error) {
-	stream, err := c.cc.NewStream(ctx, &GoPassSecretManagerWebhook_ServiceDesc.Streams[0], "/gsm.GoPassSecretManagerWebhook/Webhook", opts...)
+func (c *goPassSecretsManagerWebhookClient) Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (GoPassSecretsManagerWebhook_WebhookClient, error) {
+	stream, err := c.cc.NewStream(ctx, &GoPassSecretsManagerWebhook_ServiceDesc.Streams[0], "/gsm.GoPassSecretsManagerWebhook/Webhook", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &goPassSecretManagerWebhookWebhookClient{stream}
+	x := &goPassSecretsManagerWebhookWebhookClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -49,16 +49,16 @@ func (c *goPassSecretManagerWebhookClient) Webhook(ctx context.Context, in *Webh
 	return x, nil
 }
 
-type GoPassSecretManagerWebhook_WebhookClient interface {
+type GoPassSecretsManagerWebhook_WebhookClient interface {
 	Recv() (*WebhookResponse, error)
 	grpc.ClientStream
 }
 
-type goPassSecretManagerWebhookWebhookClient struct {
+type goPassSecretsManagerWebhookWebhookClient struct {
 	grpc.ClientStream
 }
 
-func (x *goPassSecretManagerWebhookWebhookClient) Recv() (*WebhookResponse, error) {
+func (x *goPassSecretsManagerWebhookWebhookClient) Recv() (*WebhookResponse, error) {
 	m := new(WebhookResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -66,67 +66,67 @@ func (x *goPassSecretManagerWebhookWebhookClient) Recv() (*WebhookResponse, erro
 	return m, nil
 }
 
-// GoPassSecretManagerWebhookServer is the server API for GoPassSecretManagerWebhook service.
-// All implementations must embed UnimplementedGoPassSecretManagerWebhookServer
+// GoPassSecretsManagerWebhookServer is the server API for GoPassSecretsManagerWebhook service.
+// All implementations must embed UnimplementedGoPassSecretsManagerWebhookServer
 // for forward compatibility
-type GoPassSecretManagerWebhookServer interface {
-	Webhook(*WebhookRequest, GoPassSecretManagerWebhook_WebhookServer) error
-	mustEmbedUnimplementedGoPassSecretManagerWebhookServer()
+type GoPassSecretsManagerWebhookServer interface {
+	Webhook(*WebhookRequest, GoPassSecretsManagerWebhook_WebhookServer) error
+	mustEmbedUnimplementedGoPassSecretsManagerWebhookServer()
 }
 
-// UnimplementedGoPassSecretManagerWebhookServer must be embedded to have forward compatible implementations.
-type UnimplementedGoPassSecretManagerWebhookServer struct {
+// UnimplementedGoPassSecretsManagerWebhookServer must be embedded to have forward compatible implementations.
+type UnimplementedGoPassSecretsManagerWebhookServer struct {
 }
 
-func (UnimplementedGoPassSecretManagerWebhookServer) Webhook(*WebhookRequest, GoPassSecretManagerWebhook_WebhookServer) error {
+func (UnimplementedGoPassSecretsManagerWebhookServer) Webhook(*WebhookRequest, GoPassSecretsManagerWebhook_WebhookServer) error {
 	return status.Errorf(codes.Unimplemented, "method Webhook not implemented")
 }
-func (UnimplementedGoPassSecretManagerWebhookServer) mustEmbedUnimplementedGoPassSecretManagerWebhookServer() {
+func (UnimplementedGoPassSecretsManagerWebhookServer) mustEmbedUnimplementedGoPassSecretsManagerWebhookServer() {
 }
 
-// UnsafeGoPassSecretManagerWebhookServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to GoPassSecretManagerWebhookServer will
+// UnsafeGoPassSecretsManagerWebhookServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GoPassSecretsManagerWebhookServer will
 // result in compilation errors.
-type UnsafeGoPassSecretManagerWebhookServer interface {
-	mustEmbedUnimplementedGoPassSecretManagerWebhookServer()
+type UnsafeGoPassSecretsManagerWebhookServer interface {
+	mustEmbedUnimplementedGoPassSecretsManagerWebhookServer()
 }
 
-func RegisterGoPassSecretManagerWebhookServer(s grpc.ServiceRegistrar, srv GoPassSecretManagerWebhookServer) {
-	s.RegisterService(&GoPassSecretManagerWebhook_ServiceDesc, srv)
+func RegisterGoPassSecretsManagerWebhookServer(s grpc.ServiceRegistrar, srv GoPassSecretsManagerWebhookServer) {
+	s.RegisterService(&GoPassSecretsManagerWebhook_ServiceDesc, srv)
 }
 
-func _GoPassSecretManagerWebhook_Webhook_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _GoPassSecretsManagerWebhook_Webhook_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(WebhookRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(GoPassSecretManagerWebhookServer).Webhook(m, &goPassSecretManagerWebhookWebhookServer{stream})
+	return srv.(GoPassSecretsManagerWebhookServer).Webhook(m, &goPassSecretsManagerWebhookWebhookServer{stream})
 }
 
-type GoPassSecretManagerWebhook_WebhookServer interface {
+type GoPassSecretsManagerWebhook_WebhookServer interface {
 	Send(*WebhookResponse) error
 	grpc.ServerStream
 }
 
-type goPassSecretManagerWebhookWebhookServer struct {
+type goPassSecretsManagerWebhookWebhookServer struct {
 	grpc.ServerStream
 }
 
-func (x *goPassSecretManagerWebhookWebhookServer) Send(m *WebhookResponse) error {
+func (x *goPassSecretsManagerWebhookWebhookServer) Send(m *WebhookResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-// GoPassSecretManagerWebhook_ServiceDesc is the grpc.ServiceDesc for GoPassSecretManagerWebhook service.
+// GoPassSecretsManagerWebhook_ServiceDesc is the grpc.ServiceDesc for GoPassSecretsManagerWebhook service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var GoPassSecretManagerWebhook_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "gsm.GoPassSecretManagerWebhook",
-	HandlerType: (*GoPassSecretManagerWebhookServer)(nil),
+var GoPassSecretsManagerWebhook_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "gsm.GoPassSecretsManagerWebhook",
+	HandlerType: (*GoPassSecretsManagerWebhookServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Webhook",
-			Handler:       _GoPassSecretManagerWebhook_Webhook_Handler,
+			Handler:       _GoPassSecretsManagerWebhook_Webhook_Handler,
 			ServerStreams: true,
 		},
 	},

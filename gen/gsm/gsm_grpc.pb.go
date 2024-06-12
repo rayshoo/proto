@@ -19,27 +19,27 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// GoPassSecretManagerClient is the client API for GoPassSecretManager service.
+// GoPassSecretsManagerClient is the client API for GoPassSecretsManager service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type GoPassSecretManagerClient interface {
-	Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (GoPassSecretManager_SyncClient, error)
+type GoPassSecretsManagerClient interface {
+	Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (GoPassSecretsManager_SyncClient, error)
 }
 
-type goPassSecretManagerClient struct {
+type goPassSecretsManagerClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewGoPassSecretManagerClient(cc grpc.ClientConnInterface) GoPassSecretManagerClient {
-	return &goPassSecretManagerClient{cc}
+func NewGoPassSecretsManagerClient(cc grpc.ClientConnInterface) GoPassSecretsManagerClient {
+	return &goPassSecretsManagerClient{cc}
 }
 
-func (c *goPassSecretManagerClient) Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (GoPassSecretManager_SyncClient, error) {
-	stream, err := c.cc.NewStream(ctx, &GoPassSecretManager_ServiceDesc.Streams[0], "/gsm.GoPassSecretManager/Sync", opts...)
+func (c *goPassSecretsManagerClient) Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (GoPassSecretsManager_SyncClient, error) {
+	stream, err := c.cc.NewStream(ctx, &GoPassSecretsManager_ServiceDesc.Streams[0], "/gsm.GoPassSecretsManager/Sync", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &goPassSecretManagerSyncClient{stream}
+	x := &goPassSecretsManagerSyncClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -49,16 +49,16 @@ func (c *goPassSecretManagerClient) Sync(ctx context.Context, in *SyncRequest, o
 	return x, nil
 }
 
-type GoPassSecretManager_SyncClient interface {
+type GoPassSecretsManager_SyncClient interface {
 	Recv() (*SyncResponse, error)
 	grpc.ClientStream
 }
 
-type goPassSecretManagerSyncClient struct {
+type goPassSecretsManagerSyncClient struct {
 	grpc.ClientStream
 }
 
-func (x *goPassSecretManagerSyncClient) Recv() (*SyncResponse, error) {
+func (x *goPassSecretsManagerSyncClient) Recv() (*SyncResponse, error) {
 	m := new(SyncResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -66,66 +66,66 @@ func (x *goPassSecretManagerSyncClient) Recv() (*SyncResponse, error) {
 	return m, nil
 }
 
-// GoPassSecretManagerServer is the server API for GoPassSecretManager service.
-// All implementations must embed UnimplementedGoPassSecretManagerServer
+// GoPassSecretsManagerServer is the server API for GoPassSecretsManager service.
+// All implementations must embed UnimplementedGoPassSecretsManagerServer
 // for forward compatibility
-type GoPassSecretManagerServer interface {
-	Sync(*SyncRequest, GoPassSecretManager_SyncServer) error
-	mustEmbedUnimplementedGoPassSecretManagerServer()
+type GoPassSecretsManagerServer interface {
+	Sync(*SyncRequest, GoPassSecretsManager_SyncServer) error
+	mustEmbedUnimplementedGoPassSecretsManagerServer()
 }
 
-// UnimplementedGoPassSecretManagerServer must be embedded to have forward compatible implementations.
-type UnimplementedGoPassSecretManagerServer struct {
+// UnimplementedGoPassSecretsManagerServer must be embedded to have forward compatible implementations.
+type UnimplementedGoPassSecretsManagerServer struct {
 }
 
-func (UnimplementedGoPassSecretManagerServer) Sync(*SyncRequest, GoPassSecretManager_SyncServer) error {
+func (UnimplementedGoPassSecretsManagerServer) Sync(*SyncRequest, GoPassSecretsManager_SyncServer) error {
 	return status.Errorf(codes.Unimplemented, "method Sync not implemented")
 }
-func (UnimplementedGoPassSecretManagerServer) mustEmbedUnimplementedGoPassSecretManagerServer() {}
+func (UnimplementedGoPassSecretsManagerServer) mustEmbedUnimplementedGoPassSecretsManagerServer() {}
 
-// UnsafeGoPassSecretManagerServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to GoPassSecretManagerServer will
+// UnsafeGoPassSecretsManagerServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GoPassSecretsManagerServer will
 // result in compilation errors.
-type UnsafeGoPassSecretManagerServer interface {
-	mustEmbedUnimplementedGoPassSecretManagerServer()
+type UnsafeGoPassSecretsManagerServer interface {
+	mustEmbedUnimplementedGoPassSecretsManagerServer()
 }
 
-func RegisterGoPassSecretManagerServer(s grpc.ServiceRegistrar, srv GoPassSecretManagerServer) {
-	s.RegisterService(&GoPassSecretManager_ServiceDesc, srv)
+func RegisterGoPassSecretsManagerServer(s grpc.ServiceRegistrar, srv GoPassSecretsManagerServer) {
+	s.RegisterService(&GoPassSecretsManager_ServiceDesc, srv)
 }
 
-func _GoPassSecretManager_Sync_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _GoPassSecretsManager_Sync_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(SyncRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(GoPassSecretManagerServer).Sync(m, &goPassSecretManagerSyncServer{stream})
+	return srv.(GoPassSecretsManagerServer).Sync(m, &goPassSecretsManagerSyncServer{stream})
 }
 
-type GoPassSecretManager_SyncServer interface {
+type GoPassSecretsManager_SyncServer interface {
 	Send(*SyncResponse) error
 	grpc.ServerStream
 }
 
-type goPassSecretManagerSyncServer struct {
+type goPassSecretsManagerSyncServer struct {
 	grpc.ServerStream
 }
 
-func (x *goPassSecretManagerSyncServer) Send(m *SyncResponse) error {
+func (x *goPassSecretsManagerSyncServer) Send(m *SyncResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-// GoPassSecretManager_ServiceDesc is the grpc.ServiceDesc for GoPassSecretManager service.
+// GoPassSecretsManager_ServiceDesc is the grpc.ServiceDesc for GoPassSecretsManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var GoPassSecretManager_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "gsm.GoPassSecretManager",
-	HandlerType: (*GoPassSecretManagerServer)(nil),
+var GoPassSecretsManager_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "gsm.GoPassSecretsManager",
+	HandlerType: (*GoPassSecretsManagerServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Sync",
-			Handler:       _GoPassSecretManager_Sync_Handler,
+			Handler:       _GoPassSecretsManager_Sync_Handler,
 			ServerStreams: true,
 		},
 	},
