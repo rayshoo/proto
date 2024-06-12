@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.15.0
-// source: proto/gsm.proto
+// source: gsm.proto
 
 package gsm
 
@@ -192,5 +192,5 @@ var GoPassSecretManager_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "proto/gsm.proto",
+	Metadata: "gsm.proto",
 }

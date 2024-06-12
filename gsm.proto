@@ -19,15 +19,15 @@ message SyncRequest {
   string url = 1;
   string syncMode = 2;
   string syncPolicy = 3;
-  optional string commitId = 4;
+  string commitId = 4;
 }
 message SyncResponse {
-  optional string message = 1;
+  string message = 1;
 }
 
 message WebhookRequest {
 
 }
 message WebhookResponse {
-  optional string message = 1;
+  string message = 1;
 }

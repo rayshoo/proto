@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := all
 GOOGLE_APIS = api
+GATEWAY_PROTOS = gsm
 
 pre-set:
 	echo '' >> $${HOME}/.bashrc
@@ -48,6 +49,10 @@ imports:
 
 proto:
 	protoc --go_out=. --go-grpc_out=. *.proto
+	@for GATEWAY_PROTO in $(GATEWAY_PROTOS); \
+	do \
+		protoc --grpc-gateway_out . --grpc-gateway_opt logtostderr=true --grpc-gateway_opt generate_unbound_methods=true gsm.proto; \
+	done
 .PHONY:proto
 
 all: proto imports
