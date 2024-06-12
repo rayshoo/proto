@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.15.0
-// source: gsm.proto
+// source: proto/gsm.proto
 
 package gsm
 
@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GoPassSecretManagerClient interface {
 	Sync(ctx context.Context, in *SyncRequest, opts ...grpc.CallOption) (GoPassSecretManager_SyncClient, error)
+	Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (GoPassSecretManager_WebhookClient, error)
 }
 
 type goPassSecretManagerClient struct {
@@ -66,11 +67,44 @@ func (x *goPassSecretManagerSyncClient) Recv() (*SyncResponse, error) {
 	return m, nil
 }
 
+func (c *goPassSecretManagerClient) Webhook(ctx context.Context, in *WebhookRequest, opts ...grpc.CallOption) (GoPassSecretManager_WebhookClient, error) {
+	stream, err := c.cc.NewStream(ctx, &GoPassSecretManager_ServiceDesc.Streams[1], "/gsm.GoPassSecretManager/Webhook", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &goPassSecretManagerWebhookClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type GoPassSecretManager_WebhookClient interface {
+	Recv() (*WebhookResponse, error)
+	grpc.ClientStream
+}
+
+type goPassSecretManagerWebhookClient struct {
+	grpc.ClientStream
+}
+
+func (x *goPassSecretManagerWebhookClient) Recv() (*WebhookResponse, error) {
+	m := new(WebhookResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // GoPassSecretManagerServer is the server API for GoPassSecretManager service.
 // All implementations must embed UnimplementedGoPassSecretManagerServer
 // for forward compatibility
 type GoPassSecretManagerServer interface {
 	Sync(*SyncRequest, GoPassSecretManager_SyncServer) error
+	Webhook(*WebhookRequest, GoPassSecretManager_WebhookServer) error
 	mustEmbedUnimplementedGoPassSecretManagerServer()
 }
 
@@ -80,6 +114,9 @@ type UnimplementedGoPassSecretManagerServer struct {
 
 func (UnimplementedGoPassSecretManagerServer) Sync(*SyncRequest, GoPassSecretManager_SyncServer) error {
 	return status.Errorf(codes.Unimplemented, "method Sync not implemented")
+}
+func (UnimplementedGoPassSecretManagerServer) Webhook(*WebhookRequest, GoPassSecretManager_WebhookServer) error {
+	return status.Errorf(codes.Unimplemented, "method Webhook not implemented")
 }
 func (UnimplementedGoPassSecretManagerServer) mustEmbedUnimplementedGoPassSecretManagerServer() {}
 
@@ -115,6 +152,27 @@ func (x *goPassSecretManagerSyncServer) Send(m *SyncResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
+func _GoPassSecretManager_Webhook_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(WebhookRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(GoPassSecretManagerServer).Webhook(m, &goPassSecretManagerWebhookServer{stream})
+}
+
+type GoPassSecretManager_WebhookServer interface {
+	Send(*WebhookResponse) error
+	grpc.ServerStream
+}
+
+type goPassSecretManagerWebhookServer struct {
+	grpc.ServerStream
+}
+
+func (x *goPassSecretManagerWebhookServer) Send(m *WebhookResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 // GoPassSecretManager_ServiceDesc is the grpc.ServiceDesc for GoPassSecretManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -128,6 +186,11 @@ var GoPassSecretManager_ServiceDesc = grpc.ServiceDesc{
 			Handler:       _GoPassSecretManager_Sync_Handler,
 			ServerStreams: true,
 		},
+		{
+			StreamName:    "Webhook",
+			Handler:       _GoPassSecretManager_Webhook_Handler,
+			ServerStreams: true,
+		},
 	},
-	Metadata: "gsm.proto",
+	Metadata: "proto/gsm.proto",
 }

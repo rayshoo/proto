@@ -1,10 +1,18 @@
 syntax = "proto3";
 
+import "google/api/annotations.proto";
+
 package gsm;
 option go_package = "gen/gsm";
 
 service GoPassSecretManager {
   rpc Sync(SyncRequest) returns (stream SyncResponse) {}
+  rpc Webhook(WebhookRequest) returns (stream WebhookResponse) {
+    option (google.api.http) = {
+      post: "/api/webhook"
+      body: "*"
+    };
+  }
 }
 
 message SyncRequest {
@@ -13,7 +21,13 @@ message SyncRequest {
   string syncPolicy = 3;
   optional string commitId = 4;
 }
-
 message SyncResponse {
+  optional string message = 1;
+}
+
+message WebhookRequest {
+
+}
+message WebhookResponse {
   optional string message = 1;
 }
