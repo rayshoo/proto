@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := all
 GOOGLE_APIS = api
-GATEWAY_PROTOS = gsm
+GATEWAY_PROTOS = gsm-webhook
 
 pre-set:
 	echo '' >> $${HOME}/.bashrc
@@ -51,7 +51,7 @@ proto:
 	protoc --go_out=. --go-grpc_out=. *.proto
 	@for GATEWAY_PROTO in $(GATEWAY_PROTOS); \
 	do \
-		protoc --grpc-gateway_out . --grpc-gateway_opt logtostderr=true --grpc-gateway_opt generate_unbound_methods=true gsm.proto; \
+		protoc --grpc-gateway_out . --grpc-gateway_opt logtostderr=true --grpc-gateway_opt generate_unbound_methods=true $${GATEWAY_PROTO}.proto; \
 	done
 .PHONY:proto
 

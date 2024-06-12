@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package gsm;
+option go_package = "gen/gsm-webhook";
+
+service GoPassSecretsManagerWebhook {
+  rpc Webhook(WebhookRequest) returns (stream WebhookResponse) {
+    option (google.api.http) = {
+      post: "/api/webhook"
+      body: "*"
+    };
+  }
+}
+
+message WebhookRequest {
+
+}
+
+message WebhookResponse {
+  string message = 1;
+}
