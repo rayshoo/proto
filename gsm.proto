@@ -3,6 +3,9 @@ syntax = "proto3";
 package gsm;
 option go_package = "gen/gsm";
 
+import "google/protobuf/wrappers.proto";
+import "google/api/annotations.proto";
+
 service GoPassSecretsManager {
   rpc Sync(SyncRequest) returns (stream SyncResponse) {}
 }
@@ -11,9 +14,24 @@ message SyncRequest {
   string url = 1;
   string syncMode = 2;
   string syncPolicy = 3;
-  optional string commitId = 4;
+  google.protobuf.StringValue commitId = 4;
+}
+message SyncResponse {
+  google.protobuf.StringValue message = 1;
 }
 
-message SyncResponse {
-  optional string message = 1;
+service GoPassSecretsManagerWebhook {
+  rpc Webhook(WebhookRequest) returns (stream WebhookResponse) {
+    option (google.api.http) = {
+      post: "/api/webhook"
+      body: "*"
+    };
+  }
+}
+
+message WebhookRequest {
+
+}
+message WebhookResponse {
+  google.protobuf.StringValue message = 1;
 }

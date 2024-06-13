@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := all
 GOOGLE_APIS = api
-GATEWAY_PROTOS = gsm-webhook
+GATEWAY_PROTOS = gsm
 
 pre-set:
 	echo '' >> $${HOME}/.bashrc
