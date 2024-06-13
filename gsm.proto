@@ -17,7 +17,7 @@ message SyncRequest {
   google.protobuf.StringValue commitId = 4;
 }
 message SyncResponse {
-  google.protobuf.StringValue message = 1;
+  string message = 1;
 }
 
 service GoPassSecretsManagerWebhook {
@@ -33,5 +33,5 @@ message WebhookRequest {
 
 }
 message WebhookResponse {
-  google.protobuf.StringValue message = 1;
+  string message = 1;
 }
