@@ -5,6 +5,7 @@ option go_package = "gen/gsm";
 
 import "google/protobuf/wrappers.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 service GoPassSecretsManager {
   rpc Sync(SyncRequest) returns (stream SyncResponse) {}
@@ -30,8 +31,7 @@ service GoPassSecretsManagerHook {
 }
 
 message PostHookRequest {
-  repeated string secrets = 1;
-
+  map<string, google.protobuf.Empty> secrets = 1;
 }
 message PostHookResponse {
   string message = 1;
