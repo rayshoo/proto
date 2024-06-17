@@ -58,8 +58,8 @@ func request_GoPassSecretsManager_Sync_0(ctx context.Context, marshaler runtime.
 
 }
 
-func request_GoPassSecretsManagerWebhook_Webhook_0(ctx context.Context, marshaler runtime.Marshaler, client GoPassSecretsManagerWebhookClient, req *http.Request, pathParams map[string]string) (GoPassSecretsManagerWebhook_WebhookClient, runtime.ServerMetadata, error) {
-	var protoReq WebhookRequest
+func request_GoPassSecretsManagerHook_PostHook_0(ctx context.Context, marshaler runtime.Marshaler, client GoPassSecretsManagerHookClient, req *http.Request, pathParams map[string]string) (GoPassSecretsManagerHook_PostHookClient, runtime.ServerMetadata, error) {
+	var protoReq PostHookRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -70,7 +70,7 @@ func request_GoPassSecretsManagerWebhook_Webhook_0(ctx context.Context, marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	stream, err := client.Webhook(ctx, &protoReq)
+	stream, err := client.PostHook(ctx, &protoReq)
 	if err != nil {
 		return nil, metadata, err
 	}
@@ -99,13 +99,13 @@ func RegisterGoPassSecretsManagerHandlerServer(ctx context.Context, mux *runtime
 	return nil
 }
 
-// RegisterGoPassSecretsManagerWebhookHandlerServer registers the http handlers for service GoPassSecretsManagerWebhook to "mux".
-// UnaryRPC     :call GoPassSecretsManagerWebhookServer directly.
+// RegisterGoPassSecretsManagerHookHandlerServer registers the http handlers for service GoPassSecretsManagerHook to "mux".
+// UnaryRPC     :call GoPassSecretsManagerHookServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterGoPassSecretsManagerWebhookHandlerFromEndpoint instead.
-func RegisterGoPassSecretsManagerWebhookHandlerServer(ctx context.Context, mux *runtime.ServeMux, server GoPassSecretsManagerWebhookServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterGoPassSecretsManagerHookHandlerFromEndpoint instead.
+func RegisterGoPassSecretsManagerHookHandlerServer(ctx context.Context, mux *runtime.ServeMux, server GoPassSecretsManagerHookServer) error {
 
-	mux.Handle("POST", pattern_GoPassSecretsManagerWebhook_Webhook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_GoPassSecretsManagerHook_PostHook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -184,9 +184,9 @@ var (
 	forward_GoPassSecretsManager_Sync_0 = runtime.ForwardResponseStream
 )
 
-// RegisterGoPassSecretsManagerWebhookHandlerFromEndpoint is same as RegisterGoPassSecretsManagerWebhookHandler but
+// RegisterGoPassSecretsManagerHookHandlerFromEndpoint is same as RegisterGoPassSecretsManagerHookHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterGoPassSecretsManagerWebhookHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterGoPassSecretsManagerHookHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -206,23 +206,23 @@ func RegisterGoPassSecretsManagerWebhookHandlerFromEndpoint(ctx context.Context,
 		}()
 	}()
 
-	return RegisterGoPassSecretsManagerWebhookHandler(ctx, mux, conn)
+	return RegisterGoPassSecretsManagerHookHandler(ctx, mux, conn)
 }
 
-// RegisterGoPassSecretsManagerWebhookHandler registers the http handlers for service GoPassSecretsManagerWebhook to "mux".
+// RegisterGoPassSecretsManagerHookHandler registers the http handlers for service GoPassSecretsManagerHook to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterGoPassSecretsManagerWebhookHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterGoPassSecretsManagerWebhookHandlerClient(ctx, mux, NewGoPassSecretsManagerWebhookClient(conn))
+func RegisterGoPassSecretsManagerHookHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterGoPassSecretsManagerHookHandlerClient(ctx, mux, NewGoPassSecretsManagerHookClient(conn))
 }
 
-// RegisterGoPassSecretsManagerWebhookHandlerClient registers the http handlers for service GoPassSecretsManagerWebhook
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "GoPassSecretsManagerWebhookClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "GoPassSecretsManagerWebhookClient"
+// RegisterGoPassSecretsManagerHookHandlerClient registers the http handlers for service GoPassSecretsManagerHook
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "GoPassSecretsManagerHookClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "GoPassSecretsManagerHookClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "GoPassSecretsManagerWebhookClient" to call the correct interceptors.
-func RegisterGoPassSecretsManagerWebhookHandlerClient(ctx context.Context, mux *runtime.ServeMux, client GoPassSecretsManagerWebhookClient) error {
+// "GoPassSecretsManagerHookClient" to call the correct interceptors.
+func RegisterGoPassSecretsManagerHookHandlerClient(ctx context.Context, mux *runtime.ServeMux, client GoPassSecretsManagerHookClient) error {
 
-	mux.Handle("POST", pattern_GoPassSecretsManagerWebhook_Webhook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_GoPassSecretsManagerHook_PostHook_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -231,14 +231,14 @@ func RegisterGoPassSecretsManagerWebhookHandlerClient(ctx context.Context, mux *
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_GoPassSecretsManagerWebhook_Webhook_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_GoPassSecretsManagerHook_PostHook_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_GoPassSecretsManagerWebhook_Webhook_0(ctx, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+		forward_GoPassSecretsManagerHook_PostHook_0(ctx, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -246,9 +246,9 @@ func RegisterGoPassSecretsManagerWebhookHandlerClient(ctx context.Context, mux *
 }
 
 var (
-	pattern_GoPassSecretsManagerWebhook_Webhook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "webhook"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GoPassSecretsManagerHook_PostHook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "webhook"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_GoPassSecretsManagerWebhook_Webhook_0 = runtime.ForwardResponseStream
+	forward_GoPassSecretsManagerHook_PostHook_0 = runtime.ForwardResponseStream
 )

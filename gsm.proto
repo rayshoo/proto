@@ -20,8 +20,8 @@ message SyncResponse {
   string message = 1;
 }
 
-service GoPassSecretsManagerWebhook {
-  rpc Webhook(WebhookRequest) returns (stream WebhookResponse) {
+service GoPassSecretsManagerHook {
+  rpc PostHook(PostHookRequest) returns (stream PostHookResponse) {
     option (google.api.http) = {
       post: "/api/webhook"
       body: "*"
@@ -29,9 +29,10 @@ service GoPassSecretsManagerWebhook {
   }
 }
 
-message WebhookRequest {
+message PostHookRequest {
+  string message = 1;
 
 }
-message WebhookResponse {
+message PostHookResponse {
   string message = 1;
 }
