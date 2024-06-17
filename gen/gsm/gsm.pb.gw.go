@@ -246,7 +246,7 @@ func RegisterGoPassSecretsManagerHookHandlerClient(ctx context.Context, mux *run
 }
 
 var (
-	pattern_GoPassSecretsManagerHook_PostHook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "webhook"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_GoPassSecretsManagerHook_PostHook_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"api", "postHook"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

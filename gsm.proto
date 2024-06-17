@@ -23,14 +23,14 @@ message SyncResponse {
 service GoPassSecretsManagerHook {
   rpc PostHook(PostHookRequest) returns (stream PostHookResponse) {
     option (google.api.http) = {
-      post: "/api/webhook"
+      post: "/api/postHook"
       body: "*"
     };
   }
 }
 
 message PostHookRequest {
-  string message = 1;
+  repeated string secrets = 1;
 
 }
 message PostHookResponse {
