@@ -32,8 +32,9 @@ service GoPassSecretsManagerHook {
 }
 
 message PostHookRequest {
-  map<string, google.protobuf.Empty> secrets = 1;
-  bool dryRun = 2;
+  string requestId = 1;
+  map<string, google.protobuf.Empty> secrets = 2;
+  bool dryRun = 3;
 }
 message PostHookResponse {
   string message = 1;
