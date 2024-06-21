@@ -19,7 +19,12 @@ message SyncRequest {
   google.protobuf.StringValue commitId = 5;
 }
 message SyncResponse {
+  message DebugResponse {
+   string requestId = 1;
+   string message = 2;
+  }
   string message = 1;
+  DebugResponse debugResponse = 2;
 }
 
 service GoPassSecretsManagerHook {
