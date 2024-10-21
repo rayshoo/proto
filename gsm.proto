@@ -20,8 +20,8 @@ message SyncRequest {
 }
 message SyncResponse {
   message DebugResponse {
-   string requestId = 1;
-   string message = 2;
+    string requestId = 1;
+    string message = 2;
   }
   string message = 1;
   DebugResponse debugResponse = 2;
